@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+    <style>
+        .container{
+            align-items: center;
+            margin: 20%;
+            padding: 10%;
+            opacity: 0.8;
+            justify-content: center;
+            background-color: #bdc3c7;
+            background-image: url(https://images.pexels.com/photos/376533/pexels-photo-376533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+           
+        }
+
+        .inner{
+          color: rgb(172, 154, 154);
+          opacity: 1;
+        }
+        .button{
+            background-color:rgba(219, 94, 49, 0.788) ;
+            width: 70px;
+            height: 120px;
+            margin-right: 200px;
+        }
+        #newQ{
+            background-color: coral;
+            width: 700px;
+            height: 75px;
+            margin-right: 200px;
+            padding-top: 30px;
+            padding-left: 80px;
+            font-size: 50px;
+            letter-spacing: 5px;
+        }
+
+        #postme{
+            margin-left: 600px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            padding-top: 10px;
+            /* background-color: saddlebrown; */
+        }
+
+        .text{
+            font-size: 33px;
+            color: aliceblue;
+            opacity: 1;
+            margin-bottom:120px;
+            
+        }
+
+
+     
+        
+    </style>
+</head>
+<body style="background-image:url(https://images.pexels.com/photos/1567069/pexels-photo-1567069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1) ;background-repeat:no-repeat;background-size: cover;">
+    <!-- <div id="quotes"></div>
+    <div id="author"></div>
+    <button id="newQ">New Quotes</button>
+    <button id="postme">Post Now</button>
+    -->
+    <div class="container">
+       <div class="inner">
+        <p class="number">
+            <img src="https://cdn-icons-png.flaticon.com/128/2571/2571000.png" alt="postMe" title="PostMe" id="postme">
+        </p>
+        <div class="text">
+              <i class="start-quote fa-light fa-envelopes"></i>
+              
+              <p id="quotes" class="quotes" style="color: -webkit-linear-gradient(to right, #2b5876, #4e4376);"></p>
+              By<p id="author" class="author"></p>
+        </div>
+    
+        <label class="button">
+            <p id="newQ" style="color: white;">Click here for New Quotes</p>
+        </label>
+    
+       </div>
+    </div>
+    
+
+
+
+
+
+
+
+    <script>
+        const quotes = document.getElementById("quotes");
+        const author = document.getElementById("author");
+        const newQ = document.getElementById("newQ");
+        const postme = document.getElementById("postme");
+        let realData = "";
+        let quotesData = "";
+
+        const postNow = ()=>{
+                const tweetPost = `https://twitter.com/intent/tweet?text=${quotesData.text}by${quotesData.author}`;
+                window.open(tweetPost);
+
+        }
+
+        const getNewQuotes = async() =>{
+                let rnum = Math.floor(Math.random()*10);
+                quotesData = realData[rnum];
+                quotes.innerText = `${quotesData.text}`;
+
+                quotesData.author == null ? (author.innerText = 'unKnown') : (author.innerText = `${quotesData.author}`) ;
+                //console.log(realData[rnum].author)
+        };
+        const getQuotes = async () =>{
+            const api = "https://type.fit/api/quotes";
+            try{
+                let data = await fetch(api);
+                realData =await data.json();
+                getNewQuotes();
+                //console.log(realData[0].text);
+                
+            }catch(error){
+                    
+            }
+
+        };
+
+        
+        postme.addEventListener("click",postNow);
+        newQ.addEventListener("click",getNewQuotes);
+        getQuotes();
+    </script>
+
+</body>
+</html>
